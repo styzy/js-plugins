@@ -15,9 +15,9 @@
 /**
      * 定义颜色
  */
-@color-theme: #02bb00;
+@color-theme: #124D81;
 /**/
-@color-content-base: #424242;
+@color-content-base: #000000;
 @color-content-mainContent: #666666;
 @color-content-light: #999999;
 /**/
@@ -33,8 +33,8 @@
 @color-border-base: #F5F6FA;
 @color-border-theme: @color-theme;
 /**/
-@color-change-light: #111111;
-@color-change-dark: #222222;
+@color-change-light: #050505;
+@color-change-dark: #111111;
 /**/
 @color-theme-light: @color-theme+@color-change-light;
 @color-theme-dark: @color-theme - @color-change-dark;
@@ -475,10 +475,16 @@ html.bs-setRem {
     .bs-bc-base {
         background-color: @color-background-base !important;
     }
+    &.bs-bc-base {
+        background-color: @color-background-base !important;
+    }
     .bs-bc-theme {
         background-color: @color-theme !important;
     }
     .bs-bc-FFF {
+        background-color: #FFFFFF !important;
+    }
+    &.bs-bc-FFF {
         background-color: #FFFFFF !important;
     }
     .bs-bc-gray {
