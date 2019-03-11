@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="title">商品</div>
+			<div class="list" style="overflow: hidden;">
+				<div v-for="item in list" class="item" @click="selectItem(item)" style="border:1px solid #EEEEEE;color:#424242;border-radius:4px;padding:10px;float:left;margin:10px 20px;cursor: pointer;">{{item.name}}</div>
+			</div>
+			<div class="title">已选择</div>
+			<div class="select" v-if="select">
+				<div class="name">{{select.name}}</div>
+				<div class="price">￥{{select.price}}</div>
+			</div>
+		</div>
+		<script>
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					list: [{
+						name: '可乐',
+						price: '3'
+					}, {
+						name: '雪碧',
+						price: '3'
+					}, {
+						name: '咖啡',
+						price: '5'
+					}, {
+						name: '冰红茶',
+						price: '3'
+					}, {
+						name: '脉动',
+						price: '4'
+					}, {
+						name: '可卡因',
+						price: '3000'
+					}, {
+						name: '海洛因',
+						price: '5500'
+					}, {
+						name: '核弹头',
+						price: '74000000'
+					}],
+					select: null
+				},
+				methods: {
+					selectItem(item) {
+						this.select = item
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

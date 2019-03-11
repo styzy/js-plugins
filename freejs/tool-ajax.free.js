@@ -1,10 +1,4 @@
 /**
- * Desc Ajax
- * Created by STYZY on 2016/09/01.
- * Update by STYZY on 2017/05/15.
- */
-
-/**
  * 使用说明：
  * 
 	styzy.ajax({
@@ -19,23 +13,21 @@
 		success: function(json) {}, //请求成功后回调函数
 		error: function() {} //请求失败后回调函数
 	})
- */
-
-
-if (typeof(styzy) == 'undefined') {
-    var styzy = new Object;
+**/
+if(typeof(free) == "undefined") {
+	var free = new Object();
 } else {
-    var styzy = styzy;
+	var free = free;
 }
 
-(function(styzy) {
+(function(free) {
 
-    /*
-     * 封装原生ajax Post方法
-     */
-    styzy.ajax = sAjax;
+	/*
+	 * 封装原生ajax Post方法
+	 */
+	free.ajax = ajax;
 
-    function ajax(params) {
+	function ajax(params) {
 		var XHR;
 		if(window.ActiveXObject) {
 			XHR = new ActiveXObject('Microsoft.XMLHTTP');
@@ -144,4 +136,4 @@ if (typeof(styzy) == 'undefined') {
 			}
 		}
 	}
-})(styzy)
+})(free)

@@ -8,7 +8,7 @@
  * 使用说明：
  * 
 	styzy.ajax({
-		method: 'POST', //请求方式，支持'GET'和'POST'，不填默认为 'Get'
+		type: 'POST', //请求方式，支持'GET'和'POST'，不填默认为 'Get'
 		url: '', //请求地址
 		async: true, //是否异步，不填默认为 true
 		dataType: 'json', //请求方式，支持'json'和'jsonp'
@@ -19,23 +19,22 @@
 		success: function(json) {}, //请求成功后回调函数
 		error: function() {} //请求失败后回调函数
 	})
- */
+**/
 
-
-if (typeof(styzy) == 'undefined') {
-    var styzy = new Object;
+if(typeof(styzy) == 'undefined') {
+	var styzy = new Object;
 } else {
-    var styzy = styzy;
+	var styzy = styzy;
 }
 
 (function(styzy) {
 
-    /*
-     * 封装原生ajax Post方法
-     */
-    styzy.ajax = sAjax;
+	/*
+	 * 封装原生ajax Post方法
+	 */
+	styzy.ajax = ajax;
 
-    function ajax(params) {
+	function ajax(params) {
 		var XHR;
 		if(window.ActiveXObject) {
 			XHR = new ActiveXObject('Microsoft.XMLHTTP');
@@ -44,14 +43,14 @@ if (typeof(styzy) == 'undefined') {
 		} else {
 			XHR = null;
 		}
-		
+
 		//针对某些特定版本的mozillar浏览器的bug进行修正。
 		if(XHR.overrideMimeType) {
 			XHR.overrideMimeType('text/xml');
 		}
-		
+
 		var finParams = {
-			method: ((params.method) ? params.method : 'GET'),
+			type: ((params.type) ? params.type : 'GET'),
 			url: ((params.url) ? params.url : null),
 			async: ((typeof(params.async) == 'undefined') ? true : params.async),
 			data: ((params.data) ? params.data : null),
@@ -62,23 +61,23 @@ if (typeof(styzy) == 'undefined') {
 			success: ((params.success) ? params.success : null),
 			error: ((params.error) ? params.error : null),
 		};
-		
+
 		//jsonp
 		if(finParams.dataType == 'jsonp') {
 			var jsonp = {};
-			
+
 			//创建script标签
 			jsonp.head = document.getElementsByTagName('head')[0];
 			jsonp.scriptTag = document.createElement('script');
 			jsonp.head.appendChild(jsonp.scriptTag);
-			
+
 			//创建callback
 			jsonp.callbackName = ('jsonp_' + Math.random()).replace('.', '');
 			finParams.data[finParams.callback] = jsonp.callbackName
-			
+
 			//参数格式转换成字符串
 			dataFormat();
-			
+
 			//callback注册到window对象
 			window[jsonp.callbackName] = function(json) {
 				jsonp.head.removeChild(jsonp.scriptTag);
@@ -86,10 +85,10 @@ if (typeof(styzy) == 'undefined') {
 				window[jsonp.callbackName] = null;
 				finParams.success && finParams.success(json)
 			}
-			
+
 			//发送请求
 			jsonp.scriptTag.src = finParams.url + '?' + finParams.data
-			
+
 			//超时处理
 			if(finParams.time) {
 				jsonp.timer = setTimeout(function() {
@@ -105,7 +104,7 @@ if (typeof(styzy) == 'undefined') {
 		else {
 			//参数格式转换成字符串
 			dataFormat();
-			
+
 			//注册回调函数
 			XHR.onreadystatechange = function() {
 				//判断对象状态是交互完成，接收服务器返回的数据
@@ -118,20 +117,20 @@ if (typeof(styzy) == 'undefined') {
 					}
 				}
 			};
-			
+
 			//封装请求
-			XHR.open(finParams.method, finParams.url, finParams.async);
+			XHR.open(finParams.type, finParams.url, finParams.async);
 			if(finParams.beforeSend != null) {
 				finParams.beforeSend();
 			}
-			if(finParams.method == 'POST') {
+			if(finParams.type == 'POST') {
 				XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			}
-			
+
 			//发出请求
 			XHR.send(finParams.data);
 		}
-		
+
 		//将data的json转换为url中的参数
 		function dataFormat() {
 			if(finParams.data) {
